@@ -61,7 +61,7 @@ angular.module('pictifyApp.profile', ['ngRoute'])
                             pictures: []
                         }).then(function (album) {
                             console.log(album);
-                            $scope.albums.push(album);
+                            $scope.getGallery();
                         }, function (error) {
                             console.log(error);
                         })
@@ -87,6 +87,7 @@ angular.module('pictifyApp.profile', ['ngRoute'])
                             $kinvey.DataStore.find("albums", queryForAlbums)
                                 .then(function (albums) {
                                     console.log(albums);
+                                    $scope.albums = [];
                                     for (let album of albums) {
                                         let albumProxy = album;
                                         let queryForPicsInAlbum = new $kinvey.Query();
@@ -97,24 +98,15 @@ angular.module('pictifyApp.profile', ['ngRoute'])
                                                 albumProxy.pictures = pictures;
                                                 console.log("fetched album " + albumProxy.name);
                                                 console.log(albumProxy.pictures);
-                                                let hasAlbum = false;
-                                                for(let album of $scope.albums) {
-                                                    if (album._id === albumProxy._id) {
-                                                        hasAlbum = true;
-                                                        break;
-                                                    }
-                                                }
-
-                                                if(!hasAlbum) {
-                                                    $scope.albums.push(albumProxy);
-                                                    $scope.albums.sort(function (a, b) {
-                                                        // Turn your strings into dates, and then subtract them
-                                                        // to get a value that is either negative, positive, or zero.
-                                                        return new Date(b._kmd.lmt) - new Date(a._kmd.lmt);
-                                                    });
-                                                }
+                                                $scope.albums.push(albumProxy);
+                                                $scope.albums.sort(function (a, b) {
+                                                    // Turn your strings into dates, and then subtract them
+                                                    // to get a value that is either negative, positive, or zero.
+                                                    return new Date(b._kmd.lmt) - new Date(a._kmd.lmt);
+                                                });
                                             });
                                     }
+                                    ;
                                 }, function (error) {
                                     console.log(error)
                                 });
@@ -343,9 +335,6 @@ angular.module('pictifyApp.profile', ['ngRoute'])
                         let promise = $kinvey.DataStore.destroy("pictures", picture._id);
                         promise.then(function (success) {
                             console.log(success);
-                            if(!$scope.showAll) {
-                                $scope.getGallery();
-                            }
                         }, function (error) {
                             console.log(error);
                         });

@@ -83,7 +83,7 @@ body {
 
 #navigationTabs a {
     text-decoration: none;
-    color: darkgreen;
+    color: #78787b;
     font-size: 1.7em;
 }
 
@@ -97,8 +97,7 @@ body {
 
 #navigationTabs a:focus {
     color: white;
-    background-color: #4ee82f;
-    border-radius: 15px;
+    background-color: blue;
 }
 /*.menu {*/
 /*text-align: center;*/
@@ -265,6 +264,7 @@ input[type="color"]:focus,
     height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 10px;
     border-right: 1px solid darkgreen;
     border-left: 1px solid darkgreen;
 }
