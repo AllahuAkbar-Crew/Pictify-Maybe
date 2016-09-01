@@ -285,7 +285,11 @@
                                         {{feed.user.followersCount}} followers
                                         </span>
                             <br>
-                            <span class="time" am-time-ago="feed.picture.date"></span>
+                            <span class="time" am-time-ago="feed.picture.date"
+                                  ng-click="selectPic(feed.picture)"
+                                  data-toggle="modal"
+                                  data-target="#newsFeedModal">
+                            </span>
                             <!--<div class="row">-->
                             <!--<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>-->
                             <!--<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">-->
@@ -373,7 +377,8 @@
             </div>
             <div class="followersModalBody">
                 <div ng-repeat="follower in selectedUserFollowers">
-                    <div ng-click="viewProfile(follower)" data-dismiss="modal">
+                    <div ng-click="viewProfile(follower)"
+                         data-dismiss="modal">
                         <img ng-src="{{follower.profilePicture.image._downloadURL}}">
                         <span>
                             {{follower.fullname}}
@@ -432,6 +437,11 @@
                         </button>
                     </div>
                 </div>
+
+                <a class="btn btn-warning btn-sm" download=""
+                   href="{{selectedPicture.image._downloadURL}}">
+                    Download
+                </a>
 
 
                 <div class="row">
